@@ -7,6 +7,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <UseCodebase>true</UseCodebase>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -23,9 +24,9 @@
     <ProjectGuid>{3CF8B458-7D40-4207-9F76-3AAADCEA8344}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarkdownVsix</RootNamespace>
-    <AssemblyName>MarkdownVsix</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <RootNamespace>VisualStudio.DocumentGenerate.Vsix</RootNamespace>
+    <AssemblyName>VisualStudio.DocumentGenerate.Vsix</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
@@ -54,9 +55,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ActiveDocumentRestorer.cs" />
+    <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\Constants.cs" />
+    <Compile Include="Commands\CreateMarkdownProjectCommand.cs" />
+    <Compile Include="Format\DocFormat.cs" />
+    <Compile Include="Format\Markdown\MarkdownParse.cs" />
+    <Compile Include="Format\ProjectFile.cs" />
+    <Compile Include="Format\DocParser.cs" />
+    <Compile Include="Format\Markdown\MemberDoc.cs" />
+    <Compile Include="Format\Markdown\MemberType.cs" />
     <Compile Include="GenerateMarkdown.cs" />
     <Compile Include="GenerateMarkdownPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolutionHelper.cs" />
+    <Compile Include="UIHierarchyHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -166,6 +179,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="VSPackage.resx">

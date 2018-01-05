@@ -63,10 +63,9 @@
     <GuidSymbol name="SymbolGenDocProjectNodeGroup" value="{1ebc1a20-d2e7-4875-a7ff-2a3219b14686}">
       <IDSymbol name="SymbolIdGenDocProjectNodeGroup" value="0x1052" />
     </GuidSymbol>
-    <GuidSymbol name="GenerateMarkdownPackage" value="{4c82e17d-927e-42d2-8460-b473ac7df316}" />
-
     <GuidSymbol name="guidImages" value="{1ebc1a20-d2e7-4875-a7ff-2a3219b14687}">
       <IDSymbol name="IconCollapse" value="1" />
     </GuidSymbol>
+    <GuidSymbol name="GenerateMarkdownPackage" value="{d69f1580-274f-4d12-b13a-c365c759de66}" />
   </Symbols>
 </CommandTable>
