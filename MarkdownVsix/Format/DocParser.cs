@@ -282,6 +282,10 @@ namespace VSDocument.Format.Markdown
             if (xExample != null)
                 memberInfo.Example = ParseDocText(xExample, memberInfo.FullName);
 
+            var xException = member.Element("exception");
+            if (xException != null)
+                memberInfo.Exception = ParseDocText(xException, memberInfo.FullName);
+
             var xParams = member.Elements("param");
             foreach (var param in xParams)
             {
@@ -315,13 +319,21 @@ namespace VSDocument.Format.Markdown
 
                 // Print overview of all members
                 var constructors = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-                var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
                 var events = type.GetEvents(BindingFlags.Instance | BindingFlags.Public);
-                var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
                 var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-                var staticMethods = type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
-                var staticProperties = type.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
                 var staticFields = type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+                var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+                var staticProperties = type.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+                var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                    .Where(a => !a.IsSpecialName)
+                    .ToArray();
+
+                var staticMethods = type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                    .Where(a => !a.IsSpecialName)
+                    .ToArray();
 
                 var output = new StringBuilder();
                 WriteInfo(type, output);
@@ -359,7 +371,6 @@ namespace VSDocument.Format.Markdown
             }
         }
 
-
         // To detect redundant calls
         protected virtual void Dispose(bool disposing)
         {
@@ -380,5 +391,4 @@ namespace VSDocument.Format.Markdown
             }
         }
     }
-
 }

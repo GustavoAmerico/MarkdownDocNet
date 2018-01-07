@@ -4,11 +4,9 @@ using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using VisualStudio.DocumentGenerate.Vsix.Format.Markdown;
-using VSDocument.Format.Markdown;
 
 namespace MarkdownVsix
 {
-
     /// <summary>A command that provides for cleaning up code in the selected documents.</summary>
     internal class CreateMarkdownProjectCommand : BaseCommand
     {
@@ -26,7 +24,16 @@ namespace MarkdownVsix
         /// </summary>
         /// <param name="package">The hosting package.</param>
         internal CreateMarkdownProjectCommand(GenerateMarkdownPackage package)
-            : base(package, new CommandID(Constants.PackageGuids.SymbolGenDocProjectNodeGroup, Constants.PackageIds.CmdIDSymbolGenDocProjectNodeGroup))
+            : this(package, new CommandID(Constants.PackageGuids.SymbolGenDocProjectNodeGroup, Constants.PackageIds.CmdIDSymbolGenDocProjectNodeGroup))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateMarkdownProjectCommand"/> class.
+        /// </summary>
+        /// <param name="package">The hosting package.</param>
+        internal CreateMarkdownProjectCommand(GenerateMarkdownPackage package, CommandID command)
+            : base(package, command)
         {
         }
 
@@ -45,17 +52,19 @@ namespace MarkdownVsix
             var solutionDirectory = Path.GetDirectoryName(Package.IDE.Solution.FullName);
             solutionDirectory = Path.Combine(solutionDirectory, Constants.ProjectDocPath);
 
-
             using (var document = new ActiveDocumentRestorer(Package))
             {
                 const string documentationFile = "DocumentationFile";
+                const string projectFullName = "Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.Automation.OAProject";
 
+                //&& (a.ContainingProject.Properties?.Item(documentationFile) != null)
                 var projects = SelectedProjectItems
-                    .Where(a => a.ContainingProject != null && !Equals(a.ContainingProject.Properties?.Item(documentationFile), null))
+                    .Where(a => a.ContainingProject != null &&
+                    a.ContainingProject.GetType().FullName == projectFullName)
                     .Select(a => new ProjectFile(a.ContainingProject))
+                    .Where(a => !string.IsNullOrWhiteSpace(a.DocFile))
                     .Distinct()
                     .ToArray();
-
 
                 foreach (var project in projects)
                 {

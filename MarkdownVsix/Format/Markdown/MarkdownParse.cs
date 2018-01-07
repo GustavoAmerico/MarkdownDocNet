@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,17 +13,11 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
         {
         }
 
-
         /// <summary>Returns the name of the given type as it would be notated in C#</summary>
         public string CSharpName(Type type)
         {
-            var name = "";
-
-            if (ignoredNamespaces.Contains(type.Namespace))
-                name = type.Name;
-            else
-                name = type.FullName;
-
+            //FullName is null when type is Generic with TResult, T e etc...
+            var name = ignoredNamespaces.Contains(type.Namespace) ? type.Name : type.FullName ?? type.Name;
             name = name.Replace('+', '.');
 
             if ((type.IsPrimitive || type == typeof(string)) && primitiveNames.ContainsKey(type))
@@ -41,7 +34,6 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
             output.Append("&gt;");
             return output.ToString();
         }
-
 
         /// <summary>
         /// Returns the full name of the given member, in the same notation that is used in the XML
@@ -100,10 +92,10 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
         public string MemberListCategory(string title, IEnumerable<MemberInfo> members)
         {
             var output = new StringBuilder();
-
+            output.AppendLine("");
             if (!String.IsNullOrEmpty(title))
             {
-                output.AppendLine("**" + title + "**");
+                output.AppendLine("## **" + title + "**");
                 output.AppendLine("");
             }
             foreach (var member in members)
@@ -111,7 +103,7 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
                 output.AppendLine(MemberListItem(member));
             }
             output.AppendLine("");
-
+            output.AppendLine("");
             return output.ToString();
         }
 
@@ -120,28 +112,10 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
             var fullName = FullNameFromMember(member);
 
             var output = new StringBuilder();
-
             output.AppendLine("<a id=\"" + FullNameFromMember(member) + "\"></a>");
             output.AppendLine("");
             output.Append("* ");
-            MethodInfo method = member as MethodInfo;
-            if (method != null)
-            {
-                //var method = (MethodInfo)member;
-                if (method.ReturnType == null || method.ReturnType == typeof(void))
-                    output.Append("*void* ");
-                else
-                    output.Append("*" + CSharpName(method.ReturnType) + "* ");
-
-                output.Append("**" + method.Name + "** *" + MakeSignature(method) + "*");
-            }
-            else if (member is ConstructorInfo)
-            {
-                var constructor = (ConstructorInfo)member;
-                fullName = constructor.DeclaringType.FullName + ".#ctor" + MakeSignature(constructor, false);
-                output.Append("**" + member.DeclaringType.Name + "** *" + MakeSignature(constructor) + "*");
-            }
-            else
+            if (member is FieldInfo || member is PropertyInfo)
             {
                 Type type = null;
                 if (member is FieldInfo)
@@ -154,56 +128,9 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
 
                 output.Append("**" + member.Name + "**");
             }
-
             output.AppendLine("  ");
-
             if (MemberDocumentations.ContainsKey(fullName))
-            {
-                var doc = MemberDocumentations[fullName];
-                if (!String.IsNullOrEmpty(doc.Summary))
-                    output.AppendLine("  " + doc.Summary + "  ");
-                if (!String.IsNullOrEmpty(doc.Remarks))
-                    output.AppendLine("  " + doc.Remarks);
-                if (!String.IsNullOrEmpty(doc.Returns))
-                    output.AppendLine("**Returns:** " + doc.Returns);
-                if (!String.IsNullOrEmpty(doc.Example))
-                {
-                    output.AppendLine("**Example:** ");
-                    output.AppendLine("");
-                    output.AppendLine("");
-                    output.AppendLine($@"`C# ");
-                    output.AppendLine(doc.Example);
-                    output.AppendLine("");
-                    output.AppendLine("");
-                    output.AppendLine($@"`");
-                }
-
-                output.AppendLine("");
-                if (method != null)
-                {
-                    var parameters = method.GetParameters();
-                    if (parameters.Length > 0)
-                    {
-                        output.AppendLine("**Parameters:**");
-                        foreach (var paramInfo in parameters)
-                        {
-                            output.Append("* *" + CSharpName(paramInfo.ParameterType) + "* **" + paramInfo.Name + "**");
-                            if (paramInfo.IsOptional)
-                                output.Append(" *(optional, default: " + paramInfo.DefaultValue.ToString() + ")*");
-
-                            output.AppendLine("");
-                            output.AppendLine("");
-
-                            if (doc.ParameterDescriptionsByName.ContainsKey(paramInfo.Name))
-                            {
-                                output.AppendLine(">  " + doc.ParameterDescriptionsByName[paramInfo.Name]);
-                                output.AppendLine("");
-                            }
-                        }
-                    }
-                }
-
-            }
+                this.WriteDocs(member, output);
 
             output.AppendLine("");
 
@@ -226,7 +153,7 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
                 typeType = "Enum";
 
             // Print the type name heading
-            output.AppendLine("## " + typeType + " " + type.FullName);
+            output.AppendLine("# " + typeType + " " + type.FullName);
 
             if (type.BaseType != typeof(object))
                 output.AppendLine("*Extends " + type.BaseType.FullName + "*");
@@ -258,37 +185,46 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
 
         protected override void WriteInfo(ConstructorInfo[] constructors, StringBuilder output)
         {
-            if (constructors.Length > 0)
+            if (constructors == null || !constructors.Any()) return;
+            output.AppendLine("");
+            foreach (var member in constructors)
             {
-                output.Append(MemberListCategory("Constructors", constructors));
+                var fullName = FullNameFromMember(member);
+                output.AppendLine("<a id=\"" + fullName + "\"></a>");
+                output.AppendLine("");
+                output.Append("* ");
+
+                var constructor = (ConstructorInfo)member;
+                fullName = constructor.DeclaringType.FullName + ".#ctor" + MakeSignature(constructor, false);
+                output.Append("**" + member.DeclaringType.Name + "** *" + MakeSignature(constructor) + "*");
+                this.WriteDocs(member, output);
             }
+
+            //output.Append(MemberListCategory("Constructors", constructors));
+
+            output.AppendLine("");
         }
 
         protected override void WriteInfo(MethodInfo[] methods, StringBuilder output)
         {
-            if (methods.Length > 0)
+            if (methods == null || !methods.Any()) return;
+            output.AppendLine("## **Methods**");
+            output.AppendLine("");
+            output.AppendLine("");
+
+            //TODO: Verificar se precisa remover IsSpecialName
+            foreach (var method in methods.Where(m => !m.IsConstructor))
             {
-                var methodList = new StringBuilder();
-                bool foundRealMethods = false;
+                var returnValue = (method.ReturnType == null || method.ReturnType == typeof(void))
+                    ? "void "
+                    : $"*{CSharpName(method.ReturnType) }* ";
 
-                methodList.AppendLine("**Methods**");
-                methodList.AppendLine("");
-
-                foreach (var method in methods)
-                {
-                    if (!method.IsConstructor && !method.IsSpecialName)
-                    {
-                        foundRealMethods = true;
-                        methodList.Append(MemberListItem(method));
-                    }
-                }
-
-                if (foundRealMethods)
-                {
-                    output.Append(methodList);
-                    output.AppendLine("");
-                }
+                output.Append($"### {returnValue} **{method.Name}** *{MakeSignature(method)}*");
+                WriteDocs(method, output);
             }
+
+            output.AppendLine("");
+            output.AppendLine("");
         }
 
         protected override void WriteInfo(PropertyInfo[] properties, StringBuilder output)
@@ -317,37 +253,16 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
 
         protected override void WriteStatic(FieldInfo[] staticFields, StringBuilder output)
         {
-            if (staticFields.Length > 0)
+            if (staticFields == null || staticFields.Length == 0) return;
+
+            output.AppendLine("## **Static Fields**");
+            output.AppendLine("");
+
+            foreach (var method in staticFields)
             {
-                output.Append(MemberListCategory("Static Fields", staticFields));
+                output.Append(MemberListItem(method));
             }
-        }
-
-        protected override void WriteStatic(MethodInfo[] staticMethods, StringBuilder output)
-        {
-            if (staticMethods.Length > 0)
-            {
-                var methodList = new StringBuilder();
-                bool foundRealMethods = false;
-
-                methodList.AppendLine("**Static Methods**");
-                methodList.AppendLine("");
-
-                foreach (var method in staticMethods)
-                {
-                    if (!method.IsConstructor && !method.IsSpecialName)
-                    {
-                        foundRealMethods = true;
-                        methodList.Append(MemberListItem(method));
-                    }
-                }
-
-                if (foundRealMethods)
-                {
-                    output.Append(methodList);
-                    output.AppendLine("");
-                }
-            }
+            output.AppendLine("");
         }
 
         protected override void WriteStatic(PropertyInfo[] staticProperties, StringBuilder output)
@@ -355,6 +270,81 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
             if (staticProperties.Length > 0)
             {
                 output.Append(MemberListCategory("Static Properties", staticProperties));
+            }
+        }
+
+        /// <summary>Metodo responsavel por escrever o summary, remarks, returns e example</summary>
+        /// <param name="member">Atributo/metodo que será documentado</param>
+        /// <param name="output">string de saída'</param>
+        private void WriteDocs(MemberInfo member, StringBuilder output)
+        {
+            string fullName = FullNameFromMember(member);
+            var docKey = MemberDocumentations.FirstOrDefault(d => d.Key.Replace("[^a-zA-Z0-9.]", "") == fullName.Replace("[^a-zA-Z0-9.]", ""));
+            if (ReferenceEquals(docKey, null) || ReferenceEquals(docKey.Value, null)) return;
+            var doc = docKey.Value;
+
+            output.AppendLine("");
+
+            //if (!MemberDocumentations.ContainsKey(fullName)) return;
+            //var doc = MemberDocumentations[fullName];
+            if (!String.IsNullOrEmpty(doc.Summary))
+            {
+                output.AppendLine("");
+                output.AppendLine($"        Summary: {doc.Summary} ");
+            }
+            if (!String.IsNullOrEmpty(doc.Remarks))
+            {
+                output.AppendLine("");
+                output.AppendLine($"        Remarks: {doc.Remarks}");
+            }
+            if (!String.IsNullOrEmpty(doc.Returns))
+            {
+                output.AppendLine("");
+                output.AppendLine($"        **Returns:** {doc.Returns}");
+            }
+            if (!String.IsNullOrEmpty(doc.Exception))
+            {
+                output.AppendLine("");
+                output.AppendLine("<b>Exception(s):</b>");
+                output.AppendLine($"        <label style='color:red;'>{doc.Exception}</label>");
+            }
+            if (!String.IsNullOrEmpty(doc.Example))
+            {
+                output.AppendLine("");
+                output.AppendLine("**Example:** ");
+                output.AppendLine("");
+                output.AppendLine($@"```CSharp");
+                output.AppendLine("");
+                output.AppendLine(doc.Example);
+                output.AppendLine("");
+                output.AppendLine($@"```");
+            }
+
+            //Documenta os parametros caso exista
+            if (member is MethodBase method)
+                this.WriteParameters(method, output, doc);
+            output.AppendLine("");
+        }
+
+        private void WriteParameters(MethodBase method, StringBuilder output, MemberDoc doc)
+        {
+            var parameters = method?.GetParameters();
+            if (parameters == null || !parameters.Any()) return;
+
+            output.AppendLine("#### **Parameters:**");
+            output.AppendLine("");
+            output.AppendLine("");
+
+            foreach (var paramInfo in parameters)
+            {
+                output.Append("* *" + CSharpName(paramInfo.ParameterType) + "* **" + paramInfo.Name + "**");
+                if (paramInfo.IsOptional)
+                    output.Append(" *(optional, default: " + paramInfo.DefaultValue.ToString() + ")* ");
+                if (doc.ParameterDescriptionsByName.ContainsKey(paramInfo.Name))
+                    output.Append($" - (_{doc.ParameterDescriptionsByName[paramInfo.Name]}_)");
+
+                output.AppendLine("");
+                output.AppendLine("");
             }
         }
     }

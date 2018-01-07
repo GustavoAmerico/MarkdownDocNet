@@ -7,6 +7,7 @@ namespace VSDocument.Format.Markdown
     {
         public string Example;
 
+        public string Exception;
         public string FullName;
 
         public int Importance = 0;
@@ -22,7 +23,6 @@ namespace VSDocument.Format.Markdown
         public string Returns;
 
         public string Summary;
-
         public MemberType Type;
 
         public static MemberType TypeFromDescriptor(char descriptor)

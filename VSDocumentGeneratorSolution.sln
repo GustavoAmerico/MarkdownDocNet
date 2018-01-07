@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownDocNet", "MarkdownDocNet\MarkdownDocNet.csproj", "{177B50B5-4561-443B-BAFD-A3AB19519324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudio.DocumentGenerate.Vsix", "MarkdownVsix\VisualStudio.DocumentGenerate.Vsix.csproj", "{3CF8B458-7D40-4207-9F76-3AAADCEA8344}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudio.DocumentGenerator.Vsix", "MarkdownVsix\VisualStudio.DocumentGenerator.Vsix.csproj", "{3CF8B458-7D40-4207-9F76-3AAADCEA8344}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

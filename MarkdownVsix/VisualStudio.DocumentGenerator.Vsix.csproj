@@ -24,8 +24,8 @@
     <ProjectGuid>{3CF8B458-7D40-4207-9F76-3AAADCEA8344}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VisualStudio.DocumentGenerate.Vsix</RootNamespace>
-    <AssemblyName>VisualStudio.DocumentGenerate.Vsix</AssemblyName>
+    <RootNamespace>VisualStudio.DocumentGenerator.Vsix</RootNamespace>
+    <AssemblyName>VisualStudio.DocumentGenerator.Vsix</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
@@ -59,6 +59,8 @@
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\Constants.cs" />
     <Compile Include="Commands\CreateMarkdownProjectCommand.cs" />
+    <Compile Include="Commands\CreateMarkdownSolutionCommand.cs" />
+    <Compile Include="Commands\CreateMarkdownSolutionFolderCommand.cs" />
     <Compile Include="Format\DocFormat.cs" />
     <Compile Include="Format\Markdown\MarkdownParse.cs" />
     <Compile Include="Format\ProjectFile.cs" />
@@ -83,8 +85,18 @@
     <VSCTCompile Include="GenerateMarkdownPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
-    <Content Include="index.html" />
-    <Content Include="Resources\GenerateMarkdown.png" />
+    <Content Include="index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\GenerateMarkdown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\GenerateMarkdownPackage.ico" />
     <Content Include="stylesheet.css" />
   </ItemGroup>

@@ -111,7 +111,8 @@ namespace MarkdownVsix
             if (menuCommandService != null)
             {
                 _commands.Add(new CreateMarkdownProjectCommand(this));
-
+                _commands.Add(new CreateMarkdownSolutionCommand(this));
+                _commands.Add(new CreateMarkdownSolutionFolderCommand(this));
                 // Add all commands to the menu command service.
                 foreach (var command in _commands)
                 {
