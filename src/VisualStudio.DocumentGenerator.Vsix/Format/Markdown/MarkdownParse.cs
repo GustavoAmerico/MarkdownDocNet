@@ -221,8 +221,10 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
 
                 output.Append($"### {returnValue} **{method.Name}** *{MakeSignature(method)}*");
                 WriteDocs(method, output);
-            }
 
+                output.AppendLine("");
+                output.AppendLine("");
+            }
             output.AppendLine("");
             output.AppendLine("");
         }
@@ -315,7 +317,13 @@ namespace VisualStudio.DocumentGenerate.Vsix.Format.Markdown
                 output.AppendLine("");
                 output.AppendLine($@"```CSharp");
                 output.AppendLine("");
-                output.AppendLine(doc.Example);
+                var lines = doc.Example.Split(';');
+                foreach (var line in lines)
+                {
+                    output.AppendLine(line);
+                }
+
+
                 output.AppendLine("");
                 output.AppendLine($@"```");
             }

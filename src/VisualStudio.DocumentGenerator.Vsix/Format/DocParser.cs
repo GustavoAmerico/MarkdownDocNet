@@ -121,6 +121,8 @@ namespace VSDocument.Format.Markdown
                 return impA;
             });
 
+            var assemblyName = AssemblyInfo.GetName().Name;
+            CleanFolder(OutputPath + "\\" + assemblyName);
             foreach (var type in typesSorted)
             {
                 WriteFile(type);
@@ -355,6 +357,7 @@ namespace VSDocument.Format.Markdown
 
             if (!String.IsNullOrEmpty(md))
             {
+
                 var assemblyName = type.Assembly.GetName().Name;
                 var path = $"{OutputPath}\\{assemblyName}\\";
                 if (!string.Equals(assemblyName, type.Namespace, StringComparison.CurrentCultureIgnoreCase))
@@ -370,6 +373,26 @@ namespace VSDocument.Format.Markdown
                 File.WriteAllText(file, output.ToString());
             }
         }
+
+        void CleanFolder(string folder)
+        {
+            try
+            {
+                var dir = new DirectoryInfo(folder);
+                dir.Delete(true);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                //TODO: Implementar casos que o o arquivo esta marcado como readonly
+            }
+            catch (DirectoryNotFoundException)
+            {
+                //Caso o diretorio não exista não precisa apagar 
+
+            }
+
+        }
+
 
         // To detect redundant calls
         protected virtual void Dispose(bool disposing)

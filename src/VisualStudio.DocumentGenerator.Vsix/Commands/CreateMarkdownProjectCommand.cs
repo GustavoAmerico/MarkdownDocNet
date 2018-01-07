@@ -69,6 +69,7 @@ namespace MarkdownVsix
                 foreach (var project in projects)
                 {
                     var parser = new MarkdownParse(project.DocFile, project.AssemblyFile, solutionDirectory);
+                    
                     parser.ParseXml();
                     parser.GenerateDoc();
                 }
