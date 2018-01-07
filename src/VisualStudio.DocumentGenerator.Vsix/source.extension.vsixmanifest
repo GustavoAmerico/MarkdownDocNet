@@ -6,7 +6,7 @@
         <Description xml:space="preserve">An open source extension that will automate the documentation of your C# class.</Description>
         <License>LICENSE.txt</License>
         <GettingStartedGuide>index.html</GettingStartedGuide>
-        <Icon>Resources\GenerateMarkdown.png</Icon>
+        <Icon>GenerateMarkdownPackage.ico</Icon>
         <Tags>Tools;Documentation</Tags>
     </Metadata>
     <Installation AllUsers="true">
