@@ -20,17 +20,26 @@ namespace MarkdownVsix
 
         public string Path { get; set; }
 
+        public string UniqueName { get; private set; }
+
+        public bool InvalidProject { get; }
+
         /// <summary></summary>
         /// <param name="project"></param>
         /// <exception cref="ArgumentNullException">Ocorre quando project é nulo</exception>
         public ProjectFile(EnvDTE.Project project)
         {
             if (ReferenceEquals(project, null))
-                throw new ArgumentNullException(nameof(project));
+            {
+
+                Console.WriteLine("O Programa esta tentando criar a documentação para um projeto que não foi encontrado");
+                InvalidProject = true;
+            }
 
             Path = project.Properties.Item(fullPath)?.Value?.ToString();
             AssemblyName = project.Properties.Item(assemblyName)?.Value?.ToString();
             DocName = AssemblyName + ".xml";
+            UniqueName = project.UniqueName;
         }
 
         public ProjectFile()
