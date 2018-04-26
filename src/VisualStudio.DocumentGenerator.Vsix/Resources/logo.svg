@@ -1,34 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>Page 1</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Home" transform="translate(-505.000000, -1748.000000)">
-            <g id="[section]features" transform="translate(146.000000, 1404.000000)">
-                <g id="signature" transform="translate(360.000000, 344.000000)">
-                    <g id="Page-1">
-                        <polyline id="Stroke-1" stroke="#1E99EC" stroke-width="2.4" points="47.1249 63.7504 53.7039 63.7504 53.7039 79.3754 60.8129 70.4514 60.8129 79.3754 68.0249 70.4514 68.0249 79.3754 75.2299 69.8364"></polyline>
-                        <polyline id="Stroke-2" stroke="#1E99EC" stroke-width="2.4" points="112.4008 44.7172 125.2498 31.8682 123.8298 27.6072"></polyline>
-                        <path d="M86.8304,64.6059 L81.1484,58.9229" id="Stroke-4" stroke="#1E99EC" stroke-width="2.3"></path>
-                        <path d="M109.5599,41.8764 L103.8769,36.1934" id="Stroke-5" stroke="#1E99EC" stroke-width="2.3"></path>
-                        <g id="Group-14" transform="translate(0.000000, 0.500000)">
-                            <polygon id="Stroke-6" stroke="#1E99EC" stroke-width="2.4" points="122.3451 20.0678 119.5041 20.0678 81.1501 58.4218 77.9521 66.5908 78.6621 67.3008 86.8321 64.1038 125.1861 25.7508 125.1861 22.9088"></polygon>
-                            <polyline id="Stroke-8" stroke="#38444C" stroke-width="2.5" points="82.1302 0.7504 82.1302 20.3254 101.7062 20.3254"></polyline>
-                            <polyline id="Stroke-10" stroke="#38444C" stroke-width="2.5" points="70.5306 115.4662 70.5306 125.7502 0.2496 125.7502 0.2496 32.0882 10.5336 32.0882"></polyline>
-                            <polyline id="Stroke-12" stroke="#38444C" stroke-width="2.5" points="101.7059 28.2572 101.7059 20.3252 82.1299 0.7502 31.4999 0.7502 31.4999 94.5002 101.7809 94.5002 101.7809 61.1352"></polyline>
-                        </g>
-                        <path d="M58.8436,32.5004 L51.0156,32.5004" id="Stroke-15" stroke="#38444C" stroke-width="2.5"></path>
-                        <path d="M82.2811,32.5004 L62.7501,32.5004" id="Stroke-16" stroke="#38444C" stroke-width="2.5"></path>
-                        <path d="M82.2811,40.225 L51.0151,40.225" id="Stroke-17" stroke="#38444C" stroke-width="2.5"></path>
-                        <path d="M66.6405,24.7758 L51.0155,24.7758" id="Stroke-18" stroke="#38444C" stroke-width="2.5"></path>
-                        <path d="M82.2811,48.1254 L70.5621,48.1254" id="Stroke-19" stroke="#38444C" stroke-width="2.5"></path>
-                        <path d="M51.0155,48.1254 L66.6565,48.1254" id="Stroke-20" stroke="#38444C" stroke-width="2.5"></path>
-                        <polyline id="Stroke-21" stroke="#38444C" stroke-width="2.5" points="26.3583 16.9486 15.8753 16.9486 15.8753 110.6386 86.1553 110.6386 86.1553 100.1566"></polyline>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="128px" height="128px" viewBox="0 0 128 128" enable-background="new 0 0 128 128" xml:space="preserve">  <image id="image0" width="128" height="128" x="0" y="0"
+    xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACxFBMVEX///9qc3k4RExET1fU
+19hATFPW2NpPWmGVm6CKkZZEUFfn6Ok5REyEi5A6RU2zuLuzt7rp6uvDx8nq6+y0uby3vL7Ex8rX
+2tvx8vLm6Ol/h4yqr7J/hotAS1PT6/t4wvR6w/Tm9P1KVVwuoO0emew9p+9BTFQknO1atPFWs/Ef
+mez9/v7w8fKMk5i94fmh1Pfn9P2iqKuhpqqTmp6g1Peo1/g6Rk78/v/1+/76+/v6+vr8/Pz4/P5c
+tfGv2/jV7Psvoe0jm+y64Pn5/P5ft/JtvPP9/v+vtLdtdnxzfIFgt/Kn1/gvoO5dtfFzv/OUzvYi
+m+zs9/17g4i5vcBsdHppcniBiI3a3N3V19nB4/qUm59WYWfN0NLHysza7vwyou5IU1pXYWilq67c
+7/w0o+4hmuyw2/iboaVCqu/0+v4gmutSsfDd7/z7+/v+/v6c0vfu9/0toO2hp6ugpqnk5ueY0Pbd
+8Py03fnC4/rv8PD09fX4+Pl8hImorbC2ur3O0dPe4OL3+/4xoe4hm+yt2vggmuyu2vhVsvEmneys
+2fiWz/ZLrfDg4uO9wcP9/f2j1feFyPUlnO3v+P7w+P6p1/j5+fk6pu77/f9tvfPt9/5Hq+9HrO8m
+ne233vnG5fqp2PhOr/CPzPZetvE+p+/P6ft5wvQqn+2CxvTl8/1JrfCh1ffx+f7W7fzI5vorn+17
+w/Qnne3N6Puz3fml1vc5pe5ZtPHo9f1vvvPu9/5Ys/FUsfE7pu6Dx/SIyfWUz/bU6/u/4vrq9f03
+pO44pe48p+8pnu2TzvbJ5/rK5/sxou5btfG23vl1wfOSzfbX7fyZ0faKyvVlufL+//9Cqe/z+f7h
+8fwone2e0/ey3Pmb0vdjuPKHyfXy+f7R6vve8PxdZm3Kzc+FjZHv8PG7v8Ls7e6us7aEjJF9hYpO
+WWBveH5jbHOxtrkE5G3NAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAAAYAAAAGAA8GtCzwAAAAd0SU1F
+B+IBBhczF+GCM0cAAAR0SURBVHja7dj3exRFGAfwN0uRjlKlJZQ3IkezhSSAhq4U9QQpEhAEDowo
+AiKgoBSJ1FACGgNWQAEFiaISmqAgImoE7F1RQOWfcHZyJLu3JTuz72yePM9+f9lym/t+bmd27skB
+uCdJE0+16kAXGYBWoyYl4KpaYqnNBHXoBElakuBf1NW0eoSjIAWo34BOIAVoeDWdQA4AdAJJAJ1A
+FkAmkAZQCeQBRAIfABqBHwCJwBeAQuAPICG4plF5GvsHiAuaGL5VmxIAhAXkAFEBAzRrHs+1JABB
+AQO0MB5LAVq2MqV1Pa1NoiA5JSWlbTtVAJu0T+jvgCypNgJVgOsS+zte3yliJ/AP6NzFmq5mgN7f
+DaA7E9wgBbjxJlMaVYi62QSI9wPcgpgmBehhvr0txQBl/ZBeKYDyfsiQBWT2NKWXCMDQ3/tWxNuk
+AMIpB2T1wb79Snf7D0AcOCgYwO13DLb2D2ErwVDLpWoAV5LQPwzvDBaQ0H/X3Ri9B4aXZ4RXwL0j
+eUax3dEjrRnjsX/QffoYGB6nsV4B8ccwm+2Os1l2x3vsv38CRvsxwMQH4pmk9A5Y+idPwdhUYIBp
+gcwBp/6gAI79AQFYPz6YY9cfDID1P4Q4Paes/+GyfinAI5mumWF7/x/lAku/FKCH5prxdv0AumCm
+pT8AQNn8Y4JZln4pwOzHXDPHvh/gcbT2K5+ElucvoV81wNI/l62/84xXqAVY+iGjk+nzKwZY+wFy
+5puvkQHUbWHKE+zUk4bjBW79lhA8hgvZqadsHkNP/QoB3vqlAE83MWURO7XYcNxYpF/ZJPTarwrg
+uV8RwHu/GoBAvxKASL8KgFC/AoBYPz1AsJ8csGQpPmP4/7/CfnLAMsTcZwX6yQHLcQXGVoLH+08P
+mBvBVat1gal/TV7eWirAulU83R3ebj1uyN/IBJtMn3+2pj1HBXgeeabYv1vBBHwBoHAzRkz3nxKw
+ZRbLi06AlxBfhoxXXkXz+FMCeF5zAmzFbdtff4PVb9hhnH+BAXbGMKoP0K433zKdVwdYls43u3eX
+Hu6Jsfa39yYnXq8MkFXEAfmp78RfeDe6el+G9XpVgML3UAcUvI864IP9xQDFtiWKAAUHkAN2oA4o
+OIiHljiUKAIcRg5YiRxwBPFDpxI1gKnIAUeLOOBYLm51XPmVALKK9OUu/aOPMZcBdvbB44VOHUoA
++SfwEzb4vZdj7knET6dj9JRjvwrAZ6cx8nka4heIX5YgHkT8yrlfBYDlDKTpm7PnSvTNkHNBA06n
+c8DX34AOOF4MLlEBSN0IOqDDt6AD+m5361cB+K4EdEBM/7mDAb537VcAiPwAHPAjcMBPbhNACeBn
+vknbzzclqb+499MD9pR+C/9auvb/lgwVhBwgmhAQAkJACKjagN//8J8//QCIUmUBzQkGgKezJEB9
+QoASwPns7L8qFfC3pl0IASEgBFRhwPCLvnPJF4AmsoC8f4jSVBIQfEIADSBzQc/KBfyr/RcCQkAI
+CAHyAJpUXcA0olyW7P8fW7kHM8HLfqgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTgtMDEtMDdUMDE6
+NTE6MTQtMDI6MDDulxAAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE4LTAxLTA3VDAxOjUxOjIzLTAy
+OjAw1OKR0QAAAABJRU5ErkJggg==" />
 </svg>

@@ -38,7 +38,7 @@
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
     <Bitmaps>
-      <Bitmap guid="guidImages" href="Resources\GenerateMarkdown.png"  />
+      <Bitmap guid="guidImages" href="Resources\image.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"  />
     </Bitmaps>
   </Commands>
   <CommandPlacements>
@@ -64,7 +64,13 @@
       <IDSymbol name="SymbolIdGenDocProjectNodeGroup" value="0x1052" />
     </GuidSymbol>
     <GuidSymbol name="guidImages" value="{1ebc1a20-d2e7-4875-a7ff-2a3219b14687}">
-      <IDSymbol name="IconCollapse" value="1" />
+      <IDSymbol name="IconCollapse" value="7" />
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
     <GuidSymbol name="GenerateMarkdownPackage" value="{d69f1580-274f-4d12-b13a-c365c759de66}" />
   </Symbols>
