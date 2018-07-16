@@ -308,54 +308,94 @@ namespace VSDocument.Format.Markdown
             }
         }
 
+
+        public void WriteConcreteType(Type type, StringBuilder output)
+        {
+            if (type == null || (!type.IsClass && !type.IsValueType) || !MemberDocumentations.ContainsKey(type.FullName))
+            {
+                return;
+            }
+            // Print overview of all members
+            var constructors = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var events = type.GetEvents(BindingFlags.Instance | BindingFlags.Public);
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                .Where(a => !a.IsSpecialName)
+                .ToArray();
+
+            var staticFields = type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var staticProperties = type.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var staticMethods = type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                        .Where(a => !a.IsSpecialName)
+                        .ToArray();
+
+            WriteInfo(type, output);
+            WriteStatic(staticFields, output);
+            WriteInfo(fields, output);
+            WriteInfo(properties, output);
+            WriteInfo(events, output);
+            WriteInfo(constructors, output);
+            WriteInfo(methods, output);
+            WriteStatic(staticProperties, output);
+            WriteStatic(staticMethods, output);
+            output.AppendLine("");
+
+
+        }
+
+        public void WriteInterfacesType(Type type, StringBuilder output)
+        {
+            if (!type.IsInterface)
+            {
+                return;
+            }
+
+            // Print overview of all members
+            var constructors = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var events = type.GetEvents(BindingFlags.Instance | BindingFlags.Public);
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                .Where(a => !a.IsSpecialName)
+                .ToArray();
+
+            WriteInfo(type, output);
+            WriteInfo(fields, output);
+            WriteInfo(properties, output);
+            WriteInfo(events, output);
+            WriteInfo(constructors, output);
+            WriteInfo(methods, output);
+            output.AppendLine("");
+
+        }
+
         public void WriteFile(Type type)
         {
-            string md = "";
+            if (type == null || !MemberDocumentations.ContainsKey(type.FullName))
+            {
+                return;
+            }
+            var output = new StringBuilder();
             if (type.BaseType == typeof(System.MulticastDelegate))
             {
                 // Todo: Docs for delegate types
             }
-            else if (MemberDocumentations.ContainsKey(type.FullName) && (type.IsClass || type.IsInterface || type.IsEnum))
+            else if (type.IsEnum)
             {
                 // Only print members that are documented
-
-                // Print overview of all members
-                var constructors = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-                var events = type.GetEvents(BindingFlags.Instance | BindingFlags.Public);
-
-                var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
                 var staticFields = type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
 
-                var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-                var staticProperties = type.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
-
-                var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
-                    .Where(a => !a.IsSpecialName)
-                    .ToArray();
-
-                var staticMethods = type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly)
-                    .Where(a => !a.IsSpecialName)
-                    .ToArray();
-
-                var output = new StringBuilder();
                 WriteInfo(type, output);
-
                 WriteStatic(staticFields, output);
-                if (!type.IsEnum) WriteInfo(fields, output);
 
-                WriteStatic(staticProperties, output);
-                WriteInfo(properties, output);
-
-                WriteInfo(events, output);
-                WriteInfo(constructors, output);
-                WriteInfo(methods, output);
-                WriteStatic(staticMethods, output);
-                output.AppendLine("");
-                //output.Append(new StringBuilder());
-                md = output.ToString();
             }
-
-            if (!String.IsNullOrEmpty(md))
+            else
+            {
+                WriteConcreteType(type, output);
+                WriteInterfacesType(type, output);
+            }
+            if (output.Length > 0)
             {
 
                 var assemblyName = type.Assembly.GetName().Name;
@@ -363,8 +403,6 @@ namespace VSDocument.Format.Markdown
                 if (!string.Equals(assemblyName, type.Namespace, StringComparison.CurrentCultureIgnoreCase))
                     path += type.Namespace;
 
-                var output = new StringBuilder();
-                output.Append(md);
                 output.AppendLine("");
                 output.AppendLine("---");
                 output.AppendLine("");
